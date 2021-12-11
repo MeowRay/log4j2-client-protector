@@ -6,7 +6,7 @@
 
     <groupId>net.wdsj.mcserver</groupId>
     <artifactId>Log4j2ClientProtector</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>pom</packaging>
 
     <distributionManagement>
