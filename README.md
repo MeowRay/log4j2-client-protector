@@ -1,5 +1,5 @@
 # log4j2-client-protector
-Bungee&Bukkit防止Log4j2(CVE-2021-44228)漏洞入侵玩家客户端
+Minecraft Bungee&Bukkit防止Log4j2(CVE-2021-44228)漏洞入侵玩家客户端
 
 本插件主要作用是在已修复Log4j2漏洞(升级log4j2版本)的服务器上防御其玩家客户端受到侵害
 （理论上同时安装bc和bukkit在未修复的服务端上也能起到拦截作用）
