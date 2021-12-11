@@ -30,6 +30,12 @@ Bungee前置需求: Protocolize (以下环境包已包含)
   + type:inventory-click
   + type:creative
 
+## API
+ + LCPProvider.get() #获取实例
+ + LCPUtils.String.isMatch() #匹配字符串
+ + LCPUtils.String.replaceIllegal() #修正字符串
+  
+
 ## 演示
 
 ![image](https://user-images.githubusercontent.com/29674595/145683145-355d4205-296d-4a34-a0ea-aeaecbe2a9fd.png)
