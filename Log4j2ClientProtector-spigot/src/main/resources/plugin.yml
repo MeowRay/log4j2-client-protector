@@ -1,0 +1,8 @@
+name: Log4j2ClientProtector
+version: '${project.version}'
+main: net.wdsj.mcserver.log4j2clientprotector.bukkit.BukkitLoaderPlugin
+api-version: 1.18
+author: Arthur
+
+depend:
+  - ProtocolLib
