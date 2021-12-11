@@ -7,6 +7,10 @@ Bungee&Bukkit防止Log4j2(CVE-2021-44228)漏洞入侵玩家客户端
 
 bungeecord服务器仅在bungeecord上安装即可实现基础防御功能
 
+Bukkit前置需求: ProtocolLib
+
+Bungee前置需求: Protocolize (以下环境包已包含)
+
 当然为了达到100%的效果，也可以同时在bungeecord和bukkit安装
 
 ## 特性
