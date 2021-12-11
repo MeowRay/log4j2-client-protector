@@ -12,7 +12,7 @@ object LCPUtils {
 
 
     @JvmStatic
-    fun String.isMatch() = lowercase().run { indexOf("$") + 1 == indexOf("{jndi") }
+    fun String.isMatch() = lowercase().contains("\${jndi")
 
     @JvmStatic
     fun String.replaceIllegal() = replace(REGEX, PLACEHOLDER)
