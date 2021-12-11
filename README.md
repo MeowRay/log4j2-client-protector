@@ -20,6 +20,15 @@ Bungee前置需求: Protocolize (以下环境包已包含)
 * bungeecord: 阻止 bukkit->玩家、玩家->bungee的远程执行代码
 * bukkit: 阻止 玩家->bukkit、玩家铁砧物品更名远程执行代码、创造模式更名远程执行代码、bukkit->玩家等
 * 日志记录非法利用
+* 拦截8种类型
+  + type:player->server message
+  + type:server->player json
+  + type:user->bungeecord
+  + type:bungeecord->user
+  + type:spigot->bungee
+  + type:anvil
+  + type:inventory-click
+  + type:creative
 
 ## 演示
 
