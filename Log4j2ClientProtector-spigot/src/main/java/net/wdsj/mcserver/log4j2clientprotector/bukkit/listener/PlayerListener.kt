@@ -30,7 +30,7 @@ class PlayerListener(val plugin: LCPBukkitPlugin) : Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     fun on(event: InventoryCreativeEvent) {
-        if ((event.currentItem?.itemMeta?.displayName ?: "").isMatch()) {
+        if (event.currentItem.isIllegalItem()) {
             event.isCancelled = true
             plugin.illegalAction(event.whoClicked.uniqueId, event.whoClicked.name, "type:creative")
         }

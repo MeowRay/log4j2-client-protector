@@ -59,12 +59,17 @@
                                     <artifact>net.wdsj.mcserver:WdsjServerCore</artifact>
                                     <includes>
                                         <include>net/wdsj/servercore/plugin/**</include>
+                                        <include>net/wdsj/servercore/utils/extensions/Bukkit*</include>
                                     </includes>
                                 </filter>
                                 <filter>
                                     <artifact>com.meowray.common:meow-common</artifact>
                                     <includes>
+                                        <include>com/meowray/common/LazySpawner*</include>
+                                        <include>com/meowray/common/UnsafeLazySpawner*</include>
                                         <include>com/meowray/common/InstanceProvider*</include>
+                                        <include>com/meowray/common/util/fucntion/*</include>
+                                        <include>com/meowray/common/exception/*</include>
                                     </includes>
                                 </filter>
                                 <filter>
