@@ -7,7 +7,7 @@
     <parent>
         <groupId>net.wdsj.mcserver</groupId>
         <artifactId>Log4j2ClientProtector</artifactId>
-        <version>1.1</version>
+        <version>${plugin.version}</version>
     </parent>
 
     <artifactId>Log4j2ClientProtector-bungeecord</artifactId>
