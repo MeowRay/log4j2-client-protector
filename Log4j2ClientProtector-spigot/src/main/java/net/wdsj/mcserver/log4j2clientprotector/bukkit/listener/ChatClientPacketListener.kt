@@ -18,11 +18,11 @@ class ChatClientPacketListener(val plugin0: LCPBukkitPlugin) :
 
 
     override fun onPacketReceiving(event: PacketEvent) {
-        val message = (event.packet.strings.read(0) as String)
-        if (message.isMatch()) {
+        val msg = event.packet.strings.read(0)
+        if (msg != null && msg.isMatch()) {
             plugin0.illegalAction(event.player.uniqueId,
                 event.player.name,
-                "type:player->server message:${message.replaceIllegal()}")
+                "type:player->server message:${msg.replaceIllegal()}")
             event.isCancelled = true
         }
     }
@@ -35,8 +35,8 @@ class ChatServerPacketListener(val plugin0: LCPBukkitPlugin) :
 
 
     override fun onPacketSending(event: PacketEvent) {
-        val msg = event.packet.chatComponents.read(0).json
-        if (msg.isMatch()) {
+        val msg = event.packet.chatComponents.read(0)?.json
+        if (msg !=null && msg.isMatch()) {
             plugin0.illegalAction(event.player.uniqueId,
                 event.player.name,
                 "type:server->player json:${msg.replaceIllegal()}")
