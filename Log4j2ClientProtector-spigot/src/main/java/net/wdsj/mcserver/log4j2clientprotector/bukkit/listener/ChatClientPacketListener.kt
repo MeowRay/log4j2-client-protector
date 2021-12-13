@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
 import net.wdsj.mcserver.log4j2clientprotector.bukkit.plugin.LCPBukkitPlugin
 import net.wdsj.mcserver.log4j2clientprotector.common.util.LCPUtils.isMatch
+import net.wdsj.mcserver.log4j2clientprotector.common.util.LCPUtils.levelMatch
 import net.wdsj.mcserver.log4j2clientprotector.common.util.LCPUtils.replaceIllegal
 
 /**
@@ -19,11 +20,13 @@ class ChatClientPacketListener(val plugin0: LCPBukkitPlugin) :
 
     override fun onPacketReceiving(event: PacketEvent) {
         val msg = event.packet.strings.read(0)
-        if (msg != null && msg.isMatch()) {
-            plugin0.illegalAction(event.player.uniqueId,
-                event.player.name,
-                "type:player->server message:${msg.replaceIllegal()}")
-            event.isCancelled = true
+        if (msg != null) {
+            msg.levelMatch().takeIf { it > 0 }?.let {
+                plugin0.illegalAction(event.player.uniqueId,
+                    event.player.name,
+                    "type:player->server message:${msg.replaceIllegal()}", level = it)
+                event.isCancelled = true
+            }
         }
     }
 
@@ -36,10 +39,10 @@ class ChatServerPacketListener(val plugin0: LCPBukkitPlugin) :
 
     override fun onPacketSending(event: PacketEvent) {
         val msg = event.packet.chatComponents.read(0)?.json
-        if (msg !=null && msg.isMatch()) {
+        if (msg != null && msg.levelMatch() >= plugin0.receiveProtectLevel) {
             plugin0.illegalAction(event.player.uniqueId,
                 event.player.name,
-                "type:server->player json:${msg.replaceIllegal()}")
+                "type:server->player json:${msg.replaceIllegal()}", level = 0)
             event.isCancelled = true
             return
         }

@@ -24,7 +24,7 @@
 
 
     <properties>
-        <plugin.version>1.3</plugin.version>
+        <plugin.version>1.4</plugin.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.5.31</kotlin.version>

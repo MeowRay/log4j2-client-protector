@@ -10,6 +10,8 @@ class BukkitLoaderPlugin : JavaPlugin() {
     override fun onEnable() {
         // Plugin startup logic
         bootstrap.onEnable()
+
+
     }
 
     override fun onDisable() {

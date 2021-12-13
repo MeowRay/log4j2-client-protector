@@ -10,5 +10,7 @@ import java.util.logging.Logger
  */
 interface LCPPlugin : WdsjPlugin {
 
+    var receiveProtectLevel: Int
+
     val logger: Logger
 }

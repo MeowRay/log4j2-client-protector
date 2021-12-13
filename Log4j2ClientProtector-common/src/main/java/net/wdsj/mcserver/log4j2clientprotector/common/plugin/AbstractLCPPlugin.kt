@@ -9,10 +9,12 @@ import java.util.*
  */
 abstract class AbstractLCPPlugin : LCPPlugin {
 
-    fun illegalAction(uuid: UUID, username: String, attach: String = "") {
-        logger.info("检测到非法利用 player:$username ${attach.ifBlank { "" }}")
+    open fun illegalAction(uuid: UUID, username: String, attach: String = "", level: Int = 1) {
+        logger.info("检测到非法利用 player:$username ${attach.ifBlank { "" }} level:${level}")
     }
 
+    //  fun execute(uuid: UUID, level: Int): Boolean {}
 
+    override var receiveProtectLevel: Int = 2
 
 }

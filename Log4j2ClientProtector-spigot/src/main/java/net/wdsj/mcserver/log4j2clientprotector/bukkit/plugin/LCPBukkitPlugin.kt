@@ -2,6 +2,7 @@ package net.wdsj.mcserver.log4j2clientprotector.bukkit.plugin
 
 import com.comphenix.protocol.ProtocolLibrary
 import net.wdsj.mcserver.log4j2clientprotector.bukkit.config.LCPBukkitConfig
+import net.wdsj.mcserver.log4j2clientprotector.bukkit.event.Log4j2ClientProtectorBukkitEvent
 import net.wdsj.mcserver.log4j2clientprotector.bukkit.listener.AnvilListener
 import net.wdsj.mcserver.log4j2clientprotector.bukkit.listener.ChatClientPacketListener
 import net.wdsj.mcserver.log4j2clientprotector.bukkit.listener.ChatServerPacketListener
@@ -15,8 +16,7 @@ import net.wdsj.servercore.utils.extensions.invokeOrNew
 import net.wdsj.servercore.utils.extensions.registerListener
 import net.wdsj.servercore.utils.extensions.unregisterAllListener
 import org.bukkit.Bukkit
-import org.bukkit.event.HandlerList
-import org.bukkit.plugin.Plugin
+import java.util.*
 import java.util.logging.Logger
 
 /**
@@ -31,6 +31,11 @@ class LCPBukkitPlugin(val bootstrap: LCPBukkitBootstrap) : AbstractLCPPlugin(), 
     private val playerListener = PlayerListener(this)
     private val anvilListener = AnvilListener(this)
     private var config: LCPBukkitConfig = LCPBukkitConfig()
+
+    override fun illegalAction(uuid: UUID, username: String, attach: String, level: Int) {
+        super.illegalAction(uuid, username, attach, level)
+        Bukkit.getPluginManager().callEvent(Log4j2ClientProtectorBukkitEvent(Bukkit.getPlayer(uuid)!!, level))
+    }
 
     override fun enable() {
         readConfig()
