@@ -34,7 +34,10 @@ Bungee前置需求: Protocolize (以下环境包已包含)
 
 ## API
  + LCPProvider.get() #获取LCPPlugin实例
- + LCPUtils.String.isMatch() #匹配字符串
+ + LCPUtils.String.isMatch() #匹配字符串(level 1) 
+ + LCPUtils.String.isMatchRegex() #匹配字符串(level 2) 
+ + LCPUtils.String.isMatchJndi() #匹配字符串(level 3) 
+ + LCPUtils.String.levelMatch() #返回命中等级
  + LCPUtils.String.replaceIllegal() #修正字符串
  + LCPPlugin.receiveProtectLevel #get&set被动拦截等级 1匹配${ 2(默认)符合1情况下进行正则匹配 3最符合1、2情况下匹配jndi
  + Log4j2ClientProtectorBukkitEvent #Bukkit事件，玩家发送非法字符串触发 level>=2可以认为玩家在发送恶意字符串
