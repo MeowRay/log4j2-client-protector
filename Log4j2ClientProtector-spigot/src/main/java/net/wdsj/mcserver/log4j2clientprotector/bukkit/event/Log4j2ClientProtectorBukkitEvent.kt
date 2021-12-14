@@ -9,7 +9,7 @@ import org.bukkit.event.HandlerList
  * @date  2021/12/13 13:07
  * @version 1.0
  */
-class Log4j2ClientProtectorBukkitEvent(val player: Player, val level: Int) : BaseEvent(false) {
+class Log4j2ClientProtectorBukkitEvent(val player: Player, val level: Int) : BaseEvent(true) {
 
 }
 

@@ -4,8 +4,10 @@ import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
+import io.papermc.paper.text.PaperComponents
+import net.md_5.bungee.api.chat.BaseComponent
+import net.md_5.bungee.chat.ComponentSerializer
 import net.wdsj.mcserver.log4j2clientprotector.bukkit.plugin.LCPBukkitPlugin
-import net.wdsj.mcserver.log4j2clientprotector.common.util.LCPUtils.isMatch
 import net.wdsj.mcserver.log4j2clientprotector.common.util.LCPUtils.levelMatch
 import net.wdsj.mcserver.log4j2clientprotector.common.util.LCPUtils.replaceIllegal
 
@@ -38,13 +40,29 @@ class ChatServerPacketListener(val plugin0: LCPBukkitPlugin) :
 
 
     override fun onPacketSending(event: PacketEvent) {
-        val msg = event.packet.chatComponents.read(0)?.json
-        if (msg != null && msg.levelMatch() >= plugin0.receiveProtectLevel) {
+        val jsons = event.packet.chatComponents.read(0)?.json?.run { listOf(this) }
+            ?: readBaseComponent(listOf(event.packet.modifier.read(1), event.packet.modifier.read(2)))
+        jsons.firstNotNullOfOrNull { it -> it.levelMatch().takeIf { it >= plugin0.receiveProtectLevel } }?.let {
             plugin0.illegalAction(event.player.uniqueId,
                 event.player.name,
-                "type:server->player json:${msg.replaceIllegal()}", level = 0)
+                "type:server->player json:${jsons.joinToString(" ").replaceIllegal()}", level = 0)
             event.isCancelled = true
             return
+        }
+    }
+
+
+    private fun readBaseComponent(values: List<Any>): List<String> {
+        return values.map {
+            when {
+                it is Array<*> && it.isArrayOf<BaseComponent>() -> {
+                    ComponentSerializer.toString(it)
+                }
+                plugin0.existPaperComponent && it is net.kyori.adventure.text.Component -> {
+                    PaperComponents.gsonSerializer().serialize(it)
+                }
+                else -> ""
+            }
         }
     }
 

@@ -26,6 +26,8 @@ import java.util.logging.Logger
  */
 class LCPBukkitPlugin(val bootstrap: LCPBukkitBootstrap) : AbstractLCPPlugin(), BukkitListenerHolder {
 
+    val existPaperComponent = kotlin.runCatching { Class.forName("io.papermc.paper.text.PaperComponents") }.isSuccess
+
     private val clientListener = ChatClientPacketListener(this)
     private val serverListener = ChatServerPacketListener(this)
     private val playerListener = PlayerListener(this)
@@ -34,7 +36,11 @@ class LCPBukkitPlugin(val bootstrap: LCPBukkitBootstrap) : AbstractLCPPlugin(), 
 
     override fun illegalAction(uuid: UUID, username: String, attach: String, level: Int) {
         super.illegalAction(uuid, username, attach, level)
-        Bukkit.getPluginManager().callEvent(Log4j2ClientProtectorBukkitEvent(Bukkit.getPlayer(uuid)!!, level))
+        if (level > 0) {
+            Bukkit.getScheduler().runTaskAsynchronously(bootstrap.loader, Runnable {
+                Bukkit.getPluginManager().callEvent(Log4j2ClientProtectorBukkitEvent(Bukkit.getPlayer(uuid)!!, level))
+            })
+        }
     }
 
     override fun enable() {
