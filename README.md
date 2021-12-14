@@ -20,6 +20,8 @@ Bungee前置需求: Protocolize (以下环境包已包含)
 * bungeecord: 阻止 bukkit->玩家、玩家->bungee的远程执行代码
 * bukkit: 阻止 玩家->bukkit、玩家铁砧物品更名远程执行代码、创造模式更名远程执行代码、bukkit->玩家等
 * 日志记录非法利用
+* 被动拦截等级
+* 事件
 * 拦截8种类型
   + type:player->server message
   + type:server->player json
@@ -31,10 +33,15 @@ Bungee前置需求: Protocolize (以下环境包已包含)
   + type:creative
 
 ## API
- + LCPProvider.get() #获取实例
- + LCPUtils.String.isMatch() #匹配字符串
+ + LCPProvider.get() #获取LCPPlugin实例
+ + LCPUtils.String.isMatch() #匹配字符串(level 1) 
+ + LCPUtils.String.isMatchRegex() #匹配字符串(level 2) 
+ + LCPUtils.String.isMatchJndi() #匹配字符串(level 3) 
+ + LCPUtils.String.levelMatch() #返回命中等级
  + LCPUtils.String.replaceIllegal() #修正字符串
-  
+ + LCPPlugin.receiveProtectLevel #get&set被动拦截等级 1匹配${ 2(默认)符合1情况下进行正则匹配 3最符合1、2情况下匹配jndi
+ + Log4j2ClientProtectorBukkitEvent #Bukkit事件，玩家发送非法字符串触发 level>=2可以认为玩家在发送恶意字符串
+ + Log4j2ClientProtectorBungeeEvent #Bungee事件，玩家发送非法字符串触发 level>=2可以认为玩家在发送恶意字符串
 
 ## 演示
 
