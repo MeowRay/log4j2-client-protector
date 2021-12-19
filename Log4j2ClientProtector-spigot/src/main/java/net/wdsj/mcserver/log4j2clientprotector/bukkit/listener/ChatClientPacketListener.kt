@@ -56,7 +56,8 @@ class ChatServerPacketListener(val plugin0: LCPBukkitPlugin) :
         return values.map {
             when {
                 it is Array<*> && it.isArrayOf<BaseComponent>() -> {
-                    ComponentSerializer.toString(it)
+                    // 旧版本API兼容，必须要强制转换array
+                    ComponentSerializer.toString(*it as Array<out BaseComponent>)
                 }
                 plugin0.existPaperComponent && it is net.kyori.adventure.text.Component -> {
                     PaperComponents.gsonSerializer().serialize(it)
